@@ -14,14 +14,13 @@
 }
 
 .App-header {
-  background-color: #282c34;
-  min-height: 100vh;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  font-size: calc(10px + 2vmin);
+  min-height: 100px;
   color: white;
+}
+
+body {
+  background-image: url("./assets/images/ChatGPT Image Aug 3, 2025, 08_34_25 AM.png");
+  padding: 20px;
 }
 
 .App-link {
