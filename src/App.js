@@ -49,13 +49,13 @@ function App() {
               {/* {coords?.latitude} {coords?.longitude} - {isGeolocationAvailable ? "True" : "False"} - {isGeolocationEnabled ? "True": "False"} */}
           </Stack>
           <Nav
-            activeKey="/home"
+            activeKey="/"
            >
             <Nav.Item>
               <Nav.Link href="/">Home</Nav.Link>
             </Nav.Item>
             <Nav.Item>
-              <Nav.Link href='/aboutme'>About Me</Nav.Link>
+              <Nav.Link href='/#/aboutme'>About Me</Nav.Link>
             </Nav.Item>
           </Nav>
         </Stack>
