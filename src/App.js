@@ -55,7 +55,7 @@ function App() {
               <Nav.Link href="/">Home</Nav.Link>
             </Nav.Item>
             <Nav.Item>
-              <Nav.Link href='/#/aboutme'>About Me</Nav.Link>
+              <Nav.Link href='/aboutme'>About Me</Nav.Link>
             </Nav.Item>
           </Nav>
         </Stack>
