@@ -10,7 +10,7 @@ import Home from './components/home';
 import AboutMe from './components/AboutMe';
 import { useGeolocated } from 'react-geolocated';
 import land from "./assets/images/sunny_no_sun_resized.png";
-import { useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 
 function App() {
   const today = new Date();
@@ -23,13 +23,21 @@ function App() {
         },
         userDecisionTimeout: 5000,
     });
+  const parentRef = useRef(null);
   const [weather, setWeather] = useState({});
+  const [windowWidth, setWindowWidth] = useState("0px");
+
+  useEffect(() => {
+    window.addEventListener("resize", () => {
+      setWindowWidth((window.innerWidth - 20) + "px");
+    });
+  }, []);
 
   return (
     <div className="App">
       <header className="App-header">
         <Stack>
-          <Stack direction="horizontal" style={{justifyContent: "space-between", borderRadius: "5px", 
+          <Stack ref={parentRef} direction="horizontal" style={{justifyContent: "space-between", borderRadius: "5px", 
             height: "100px", backgroundImage: `url(${land})`, paddingLeft: "10px", paddingRight: "10px"}}>
             <div style={{zIndex: "101"}}>
               <Image src={logo} style={{height: "80px"}}/>

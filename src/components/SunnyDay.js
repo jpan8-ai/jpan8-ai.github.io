@@ -25,8 +25,6 @@ const WeatherWidget = ({lat, long, style, setWeatherExt}) => {
     else if(currentTime > 18) {
       adjustedCurrentTime = 12;
     }
-    console.log(adjustedCurrentTime);
-    console.log(ref.current.clientWidth);
     setCurrentPosition((adjustedCurrentTime / 12) * ref?.current?.clientWidth);
   });
 

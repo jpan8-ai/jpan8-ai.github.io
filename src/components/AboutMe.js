@@ -1,6 +1,7 @@
 import axios from "axios";
 import { useEffect, useState } from "react";
 import { Nav, Stack } from "react-bootstrap";
+import { useScroll, motion, Variants } from "framer-motion";
 
 const AboutMe = () => {
     const axiosInstance = axios.create({
@@ -8,6 +9,7 @@ const AboutMe = () => {
     });
 
     const [aboutMeInfo, setAboutMeInfo] = useState([]);
+    const { scrollYProgress } = useScroll();
 
     useEffect(() => {
         axiosInstance.get("aboutme")
@@ -21,24 +23,36 @@ const AboutMe = () => {
     }, []);
 
     return (
-        <Stack direction="horizontal">
-            <Nav defaultActiveKey="/home" className="flex-column">
-                {
-                    aboutMeInfo.map((value, index) => 
-                        <Nav.Link>
-                            {value.section}
-                        </Nav.Link>
-                    )
-                }
-            </Nav>
-            <Stack>
-                {aboutMeInfo.map(content => 
-                    <span style={{textAlign: "left"}}>
-                        {content.content}
-                    </span>
-                )}
-            </Stack>
+        <Stack>
+            {
+                aboutMeInfo.map((value, index) => 
+                    <Card header={value.section} text={value.content} />
+                )
+            }
         </Stack>
+    );
+};
+
+const Card = ({header, text}) => {
+    return (
+        <>
+        <h3>
+            {header}
+        </h3>
+        <motion.div
+            style={{textAlign: "left"}}
+            initial={{scale: 0.5, }}
+            whileInView={{ 
+                scale: 1,
+                transition: {
+                    type: "linear", duration: 0.8
+                }
+            }}
+            viewport={{ amount: 0.8 }}
+        >
+            {text}
+        </motion.div>
+        </>
     );
 };
 
