@@ -68,7 +68,9 @@ function App() {
           </Nav>
         </Stack>
       </header>
-      <main style={{height: "calc(100vh - 220px)", backgroundColor: "beige", borderRadius: "5px", overflowY: "auto", minHeight: "100px"}}>
+      <main style={{height: "calc(100vh - 220px)", backgroundColor: "beige", borderRadius: "5px", overflowY: "auto", minHeight: "100px",
+        justifyItems: "center"
+      }}>
         <Routes>
           <Route path={""} element={<Home/>}/>
           <Route path={"/aboutme"} element={<AboutMe/>}/>

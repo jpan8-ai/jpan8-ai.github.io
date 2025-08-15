@@ -23,6 +23,10 @@ body {
   padding: 20px;
 }
 
+.card::-webkit-scrollbar {
+  background-color: #61dafb;
+}
+
 .App-link {
   color: #61dafb;
 }

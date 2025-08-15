@@ -30,24 +30,26 @@ const Home = () => {
     }, []);
     return (
         <>
-        <h1>Welcome to My Site</h1>
-        <Carousel style={{marginLeft: "100px", marginRight: "100px" }}>
+        <h1>Tops News</h1>
+        <Carousel style={{paddingLeft: "150px", paddingRight: "150px", paddingTop: "50px",
+            paddingBottom: "50px"}} variant="dark">
             {news.map((value, index) =>
                 <Carousel.Item>
-                    <Stack direction="horizontal" style={{justifyContent: "space-evenly", gap: "10px"}}>
+                    <Stack direction="horizontal" style={{height: "max-content", justifyContent: "space-evenly", gap: "10px"}}>
                         {value.map((news, index) =>          
-                            <Card style={{ height: "200px" }}>
+                            <Card style={{ height: "-webkit-fill-available", 
+                                width: "calc(100% / 3)", backgroundColor: "#61dafb" }}>
                                 <Card.Body>
                                     <Card.Title>{news.title}</Card.Title>
-                                    <Card.Text style={{overflowY: "auto"}}>
-                                        {news.summary}
-                                    </Card.Text>
-                                    <sub>{news.url}</sub>
+                                    <div style={{overflowY: "auto", maxHeight: "100px"}}>
+                                        {news.text}
+                                    </div>
+                                    <sub><a href={news.url} target="_blank">Source</a></sub>
                                 </Card.Body>
                             </Card>                     
                         )} 
                     </Stack>
-                </Carousel.Item>  
+                </Carousel.Item>
             )}
         </Carousel>
         </>
