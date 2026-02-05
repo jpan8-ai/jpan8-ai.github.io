@@ -1,31 +1,34 @@
 import { motion } from 'framer-motion'
 import { Link } from 'react-router-dom'
 import './Blog.css'
+import axios from "axios";
 
 export default function Blog() {
-  const posts = [
-    {
-      title: 'Getting Started with React Hooks',
-      excerpt: 'A deep dive into useState, useEffect, and building your first custom hook.',
-      date: '2024-01-15',
-      readTime: '5 min read',
-      slug: 'getting-started-react-hooks',
-    },
-    {
-      title: 'Building Performant Web Apps',
-      excerpt: 'Tips and techniques for optimizing your React applications.',
-      date: '2024-01-08',
-      readTime: '7 min read',
-      slug: 'building-performant-web-apps',
-    },
-    {
-      title: 'Why I Switched to TypeScript',
-      excerpt: 'My journey from JavaScript to TypeScript and why you should too.',
-      date: '2023-12-20',
-      readTime: '6 min read',
-      slug: 'why-i-switched-to-typescript',
-    },
-  ]
+  const axiosInstance = axios.create({
+        baseURL: process.env.REACT_APP_API_BASE_URL
+    });
+    const [news, setNews] = useState([]);
+
+    useEffect(() => {
+        axiosInstance.get("getnews")
+            .then(response => {
+                let news = [];
+                for(var i = 0; i < response?.data?.length; i += 3)
+                {
+                    let inner = [];
+                    for(var j = i; j < i + 3 && j < response?.data?.length; j ++)
+                    {
+                        inner = [...inner, response?.data[j]];
+                    }
+                    news = [...news, inner];
+                }
+                setNews(news);
+                console.log(news);
+            })
+            .catch(err => 
+                console.log(err)
+            );
+    }, []);
 
   return (
     <motion.main 
@@ -38,26 +41,32 @@ export default function Blog() {
       <h1 className="section-title">Blog</h1>
       
       <p className="blog-intro">
-        Thoughts on development, design, and everything in between.
+        AI and Software Development News; thoughts on AI and Software Development, and everything in between.
       </p>
 
-      <div className="posts-grid">
-        {posts.map((post, index) => (
-          <article key={index} className="post-card card-hover">
-            <div className="post-meta">
-              <span className="post-date">{post.date}</span>
-              <span className="post-read">{post.readTime}</span>
-            </div>
-            <h2 className="post-title">
-              <Link to={`/blog/${post.slug}`}>{post.title}</Link>
-            </h2>
-            <p className="post-excerpt">{post.excerpt}</p>
-            <Link to={`/blog/${post.slug}`} className="post-link">
-              Read More →
-            </Link>
-          </article>
-        ))}
-      </div>
+      <Carousel className="posts-grid"}} variant="dark">
+          {news.map((value, index) =>
+              <Carousel.Item>
+                  <Stack direction="horizontal" style={{height: "max-content", justifyContent: "space-evenly", gap: "10px"}}>
+                      {value.map((news, index) => (         
+                          <article key={index} className="post-card card-hover">
+                            <div className="post-meta">
+                              <span className="post-date">{news.publish_date}</span>
+                              <span className="post-read">{news.author}</span>
+                            </div>
+                            <h2 className="post-title">
+                              {news.title}
+                            </h2>
+                            <p className="post-excerpt">{news.text}</p>
+                            <Link to={news.url} className="post-link">
+                              Read More →
+                            </Link>
+                          </article>                     
+                      )} 
+                  </Stack>
+              </Carousel.Item>
+          )}
+      </Carousel>
 
       <div className="newsletter">
         <h3>Stay Updated</h3>
