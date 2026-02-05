@@ -44,11 +44,11 @@ export default function Blog() {
         AI and Software Development News; thoughts on AI and Software Development, and everything in between.
       </p>
 
-      <Carousel className="posts-grid"}} variant="dark">
+      <Carousel className="posts-grid" variant="dark">
           {news.map((value, index) =>
               <Carousel.Item>
                   <Stack direction="horizontal" style={{height: "max-content", justifyContent: "space-evenly", gap: "10px"}}>
-                      {value.map((news, index) => (         
+                      {value.map((news, index) =>        
                           <article key={index} className="post-card card-hover">
                             <div className="post-meta">
                               <span className="post-date">{news.publish_date}</span>
