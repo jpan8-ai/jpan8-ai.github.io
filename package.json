@@ -2,7 +2,7 @@
   "name": "personal-website",
   "private": true,
   "version": "1.0.0",
-  "homepage": "https://jpan8-ai.github.io",
+  "homepage": "https://jpan8-ai.github.io/personal-website",
   "type": "module",
   "scripts": {
     "dev": "vite",
