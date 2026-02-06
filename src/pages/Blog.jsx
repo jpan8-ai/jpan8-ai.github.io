@@ -2,32 +2,35 @@ import { motion } from 'framer-motion'
 import { Link } from 'react-router-dom'
 import './Blog.css'
 import axios from "axios";
+import { useState, useEffect } from 'react';
+import { Carousel, Stack } from "react-bootstrap";
 
 export default function Blog() {
   const axiosInstance = axios.create({
-        baseURL: process.env.REACT_APP_API_BASE_URL
+        baseURL: import.meta.env.VITE_REACT_APP_API_BASE_URL
     });
     const [news, setNews] = useState([]);
-
+console.log(import.meta.env.REACT_APP_API_BASE_URL);
     useEffect(() => {
-        axiosInstance.get("getnews")
-            .then(response => {
-                let news = [];
-                for(var i = 0; i < response?.data?.length; i += 3)
+        axiosInstance.get("getnews?searchterms=ai+OR+artificial+intelligent")
+          .then(response => {
+            console.log(response);
+            let news = [];
+            for(var i = 0; i < response?.data?.length; i += 3)
+            {
+                let inner = [];
+                for(var j = i; j < i + 3 && j < response?.data?.length; j ++)
                 {
-                    let inner = [];
-                    for(var j = i; j < i + 3 && j < response?.data?.length; j ++)
-                    {
-                        inner = [...inner, response?.data[j]];
-                    }
-                    news = [...news, inner];
+                    inner = [...inner, response?.data[j]];
                 }
-                setNews(news);
-                console.log(news);
-            })
-            .catch(err => 
-                console.log(err)
-            );
+                news = [...news, inner];
+            }
+            setNews(news);
+            console.log(news);
+          })
+          .catch(err => 
+              console.log(err)
+          );
     }, []);
 
   return (
@@ -44,28 +47,29 @@ export default function Blog() {
         AI and Software Development News; thoughts on AI and Software Development, and everything in between.
       </p>
 
-      <Carousel className="posts-grid" variant="dark">
-          {news.map((value, index) =>
-              <Carousel.Item>
-                  <Stack direction="horizontal" style={{height: "max-content", justifyContent: "space-evenly", gap: "10px"}}>
-                      {value.map((news, index) =>        
-                          <article key={index} className="post-card card-hover">
-                            <div className="post-meta">
-                              <span className="post-date">{news.publish_date}</span>
-                              <span className="post-read">{news.author}</span>
-                            </div>
-                            <h2 className="post-title">
-                              {news.title}
-                            </h2>
-                            <p className="post-excerpt">{news.text}</p>
-                            <Link to={news.url} className="post-link">
-                              Read More →
-                            </Link>
-                          </article>                     
-                      )} 
-                  </Stack>
-              </Carousel.Item>
-          )}
+      <Carousel variant="dark">
+        {news.map((value, index) =>
+          <Carousel.Item>
+            1
+            {/* <div className="posts-grid">
+              {value.map((news, index) =>        
+                  <article key={index} className="post-card card-hover">
+                    <div className="post-meta">
+                      <span className="post-date">{news.publish_date}</span>
+                      <span className="post-read">{news.author}</span>
+                    </div>
+                    <h2 className="post-title">
+                      {news.title}
+                    </h2>
+                    {/* <p className="post-excerpt">{news.text}</p>
+                    <Link to={news.url} className="post-link">
+                      Read More →
+                    </Link>
+                  </article>                     
+              )} 
+            </div>*/}
+          </Carousel.Item>
+        )}
       </Carousel>
 
       <div className="newsletter">
