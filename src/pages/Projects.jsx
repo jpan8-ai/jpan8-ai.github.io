@@ -1,5 +1,6 @@
 import { motion } from 'framer-motion'
 import './Projects.css'
+import Carousel from '../components/Carousel'
 
 export default function Projects() {
   const projects = [
@@ -26,6 +27,18 @@ export default function Projects() {
     },
   ]
 
+  const carouselItems = projects.map((project, index) => (
+    <div key={index} className="slide-content">
+      <h3>{project.title}</h3>
+      <p>{project.description}</p>
+      <div className="project-tech">
+        {project.tech.map((tech) => (
+          <span key={tech} className="tech-tag">{tech}</span>
+        ))}
+      </div>
+    </div>
+  ))
+
   return (
     <motion.main 
       className="projects page"
@@ -39,6 +52,10 @@ export default function Projects() {
       <p className="projects-intro">
         Here are some of the things I've built. Each project taught me something new.
       </p>
+
+      <section className="projects-carousel">
+        <Carousel items={carouselItems} autoPlay={true} interval={6000} />
+      </section>
 
       <div className="projects-grid">
         {projects.map((project, index) => (

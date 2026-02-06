@@ -5,6 +5,14 @@
   max-width: 600px;
 }
 
+.projects-carousel {
+  margin-bottom: 80px;
+}
+
+.projects-carousel .tech-tag {
+  margin: 8px 6px 0;
+}
+
 .projects-grid {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(340px, 1fr));
