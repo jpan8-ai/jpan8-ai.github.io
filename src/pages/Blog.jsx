@@ -4,6 +4,7 @@ import './Blog.css'
 import axios from "axios";
 import { useState, useEffect } from 'react';
 import Carousel from "../components/Carousel";
+import Forum from "../components/Forum";
 
 export default function Blog() {
   const axiosInstance = axios.create({
@@ -77,6 +78,8 @@ export default function Blog() {
 
       <Carousel items={carouselItems}/>
       <div style={{height: "100px"}}></div>
+
+      <Forum />
 
       <div className="newsletter">
         <h3>Stay Updated</h3>
