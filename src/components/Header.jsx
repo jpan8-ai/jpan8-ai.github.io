@@ -20,6 +20,7 @@ export default function Header() {
     { path: '/about', label: 'About' },
     { path: '/resume', label: 'Resume' },
     { path: '/projects', label: 'Projects' },
+    { path: '/game', label: 'Game' },
     { path: '/blog', label: 'Blog' },
     { path: '/contact', label: 'Contact' },
   ]

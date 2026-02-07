@@ -1,0 +1,587 @@
+.rpg-game {
+  width: 100%;
+  max-width: 900px;
+  margin: 0 auto;
+  padding: 20px;
+  font-family: var(--font-body);
+}
+
+/* Game Over Screen */
+.rpg-game.game-over {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(0, 0, 0, 0.9);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 1000;
+}
+
+.game-over-content {
+  background: var(--bg-secondary);
+  border: 2px solid var(--accent);
+  border-radius: 16px;
+  padding: 48px;
+  text-align: center;
+}
+
+.game-over-content h1 {
+  font-size: 2.5rem;
+  color: #ff4444;
+  margin-bottom: 16px;
+}
+
+.game-over-content p {
+  color: var(--text-secondary);
+  margin-bottom: 12px;
+  font-size: 1.1rem;
+}
+
+.game-over-content .btn {
+  margin-top: 24px;
+}
+
+/* Victory Screen */
+.victory-screen {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(0, 0, 0, 0.9);
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  z-index: 1000;
+}
+
+.victory-screen h1 {
+  font-size: 3rem;
+  color: var(--accent);
+  margin-bottom: 24px;
+}
+
+.victory-screen p {
+  color: var(--text-secondary);
+  font-size: 1.2rem;
+  margin-bottom: 12px;
+}
+
+/* Stats Bar */
+.stats-bar {
+  display: flex;
+  gap: 24px;
+  padding: 16px 24px;
+  background: var(--bg-secondary);
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  margin-bottom: 24px;
+  flex-wrap: wrap;
+}
+
+.stat {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.stat-icon {
+  font-size: 1.3rem;
+}
+
+.stat-bar {
+  width: 100px;
+  height: 12px;
+  background: var(--bg-primary);
+  border-radius: 6px;
+  overflow: hidden;
+}
+
+.stat-fill {
+  height: 100%;
+  border-radius: 6px;
+  transition: width 0.3s ease;
+}
+
+.stat-fill.health {
+  background: linear-gradient(90deg, #ff4444, #ff6b6b);
+}
+
+.stat-value {
+  font-weight: 500;
+  font-size: 0.9rem;
+}
+
+/* Message Display */
+.game-message {
+  background: var(--bg-secondary);
+  border: 1px solid var(--border);
+  border-left: 4px solid var(--accent);
+  border-radius: 8px;
+  padding: 16px 20px;
+  margin-bottom: 24px;
+  color: var(--text-primary);
+  font-size: 1rem;
+  line-height: 1.6;
+}
+
+/* Game Areas */
+.game-area {
+  margin-top: 20px;
+}
+
+/* Explore Mode */
+.game-area.explore {
+  display: grid;
+  grid-template-columns: 150px 1fr;
+  gap: 24px;
+}
+
+/* Mini Map */
+.mini-map {
+  background: var(--bg-secondary);
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  padding: 16px;
+  height: fit-content;
+}
+
+.mini-map h3 {
+  font-size: 0.9rem;
+  margin-bottom: 12px;
+  text-align: center;
+}
+
+.map-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 8px;
+}
+
+.map-cell {
+  width: 40px;
+  height: 40px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background: var(--bg-primary);
+  border: 2px solid var(--border);
+  border-radius: 8px;
+  font-weight: 600;
+  font-size: 0.9rem;
+  transition: all 0.3s ease;
+}
+
+.map-cell.current {
+  border-color: var(--accent);
+  background: var(--accent-dim);
+  color: var(--accent);
+}
+
+.map-cell.solved {
+  background: rgba(46, 204, 113, 0.2);
+  border-color: #2ecc71;
+}
+
+/* Room Display */
+.room-display {
+  background: var(--bg-secondary);
+  border: 1px solid var(--border);
+  border-radius: 16px;
+  padding: 32px;
+}
+
+.room-header {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  margin-bottom: 16px;
+}
+
+.room-header h2 {
+  font-size: 1.5rem;
+}
+
+.room-coords {
+  color: var(--text-secondary);
+  font-size: 0.9rem;
+  background: var(--bg-primary);
+  padding: 4px 12px;
+  border-radius: 20px;
+}
+
+.room-description {
+  color: var(--text-secondary);
+  margin-bottom: 24px;
+  line-height: 1.7;
+}
+
+.room-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px;
+  margin-bottom: 24px;
+}
+
+.action-btn {
+  padding: 14px 24px;
+  border-radius: 10px;
+  font-size: 0.95rem;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  border: none;
+}
+
+.action-btn.puzzle {
+  background: linear-gradient(135deg, #667eea, #764ba2);
+  color: white;
+}
+
+.action-btn.combat {
+  background: linear-gradient(135deg, #ff416c, #ff4b2b);
+  color: white;
+}
+
+.action-btn.item {
+  background: linear-gradient(135deg, #11998e, #38ef7d);
+  color: white;
+}
+
+.action-btn.treasure {
+  background: linear-gradient(135deg, #f7971e, #ffd200);
+  color: #1a1a1a;
+}
+
+.action-btn:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
+}
+
+.solved-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 14px 24px;
+  background: rgba(46, 204, 113, 0.2);
+  border: 1px solid #2ecc71;
+  border-radius: 10px;
+  color: #2ecc71;
+  font-weight: 500;
+}
+
+/* Movement Controls */
+.movement-controls {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 8px;
+  margin-top: 24px;
+}
+
+.movement-controls button {
+  width: 50px;
+  height: 50px;
+  border-radius: 12px;
+  background: var(--bg-secondary);
+  border: 2px solid var(--border);
+  font-size: 1.3rem;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.movement-controls button:hover {
+  border-color: var(--accent);
+  transform: scale(1.1);
+}
+
+.movement-row {
+  display: flex;
+  gap: 8px;
+}
+
+/* Inventory Panel */
+.inventory-panel {
+  grid-column: 1 / -1;
+  background: var(--bg-secondary);
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  padding: 20px;
+  margin-top: 24px;
+}
+
+.inventory-panel h4 {
+  margin-bottom: 12px;
+  font-size: 1rem;
+}
+
+.inventory-items {
+  display: flex;
+  gap: 12px;
+  flex-wrap: wrap;
+  min-height: 40px;
+  align-items: center;
+}
+
+.empty-inventory {
+  color: var(--text-secondary);
+  font-style: italic;
+}
+
+.inventory-item {
+  font-size: 1.8rem;
+  background: var(--bg-primary);
+  padding: 8px;
+  border-radius: 8px;
+  border: 1px solid var(--border);
+  cursor: pointer;
+  transition: transform 0.2s ease;
+}
+
+.inventory-item:hover {
+  transform: scale(1.2);
+}
+
+.use-potion-btn {
+  margin-top: 12px;
+  padding: 10px 20px;
+  background: linear-gradient(135deg, #11998e, #38ef7d);
+  border: none;
+  border-radius: 8px;
+  color: white;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.use-potion-btn:hover {
+  transform: translateY(-2px);
+}
+
+/* Puzzle Mode */
+.game-area.puzzle {
+  display: flex;
+  justify-content: center;
+  padding: 40px;
+}
+
+.puzzle-card {
+  background: var(--bg-secondary);
+  border: 2px solid var(--accent);
+  border-radius: 20px;
+  padding: 48px;
+  max-width: 500px;
+  width: 100%;
+  text-align: center;
+}
+
+.puzzle-card h2 {
+  margin-bottom: 16px;
+}
+
+.puzzle-type {
+  display: inline-block;
+  padding: 6px 16px;
+  background: var(--accent-dim);
+  border-radius: 20px;
+  font-size: 0.8rem;
+  font-weight: 600;
+  color: var(--accent);
+  margin-bottom: 24px;
+}
+
+.puzzle-question {
+  font-size: 1.4rem;
+  margin-bottom: 32px;
+  line-height: 1.6;
+}
+
+.puzzle-input {
+  width: 100%;
+  padding: 16px 20px;
+  font-size: 1.1rem;
+  border: 2px solid var(--border);
+  border-radius: 12px;
+  background: var(--bg-primary);
+  color: var(--text-primary);
+  text-align: center;
+  margin-bottom: 24px;
+}
+
+.puzzle-input:focus {
+  outline: none;
+  border-color: var(--accent);
+}
+
+.puzzle-actions {
+  display: flex;
+  gap: 16px;
+  justify-content: center;
+  margin-bottom: 16px;
+}
+
+.hint-btn {
+  padding: 12px 24px;
+  background: transparent;
+  border: 1px dashed var(--border);
+  border-radius: 8px;
+  color: var(--text-secondary);
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.hint-btn:hover {
+  border-color: var(--accent);
+  color: var(--accent);
+}
+
+/* Combat Mode */
+.game-area.combat {
+  display: flex;
+  justify-content: center;
+  padding: 40px;
+}
+
+.combat-scene {
+  background: var(--bg-secondary);
+  border: 2px solid #ff4444;
+  border-radius: 20px;
+  padding: 40px;
+  max-width: 600px;
+  width: 100%;
+}
+
+.combat-header h2 {
+  text-align: center;
+  margin-bottom: 32px;
+  color: #ff4444;
+}
+
+.combat-arena {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 32px;
+}
+
+.combat-sprite {
+  font-size: 4rem;
+  margin-bottom: 16px;
+  text-align: center;
+}
+
+.combat-stats {
+  text-align: center;
+}
+
+.combat-stats span:first-child {
+  display: block;
+  font-weight: 600;
+  margin-bottom: 8px;
+}
+
+.hp-bar {
+  width: 120px;
+  height: 16px;
+  background: var(--bg-primary);
+  border-radius: 8px;
+  overflow: hidden;
+  margin-bottom: 8px;
+}
+
+.hp-fill {
+  height: 100%;
+  border-radius: 8px;
+  transition: width 0.3s ease;
+}
+
+.player-hp {
+  background: linear-gradient(90deg, #2ecc71, #27ae60);
+}
+
+.enemy-hp {
+  background: linear-gradient(90deg, #ff4444, #cc0000);
+}
+
+.combat-puzzle {
+  text-align: center;
+}
+
+.combat-message {
+  color: var(--text-secondary);
+  margin-bottom: 16px;
+}
+
+.combat-puzzle .puzzle-question {
+  font-size: 1.2rem;
+}
+
+.combat-start-btn {
+  padding: 20px 40px;
+  background: linear-gradient(135deg, #ff416c, #ff4b2b);
+  border: none;
+  border-radius: 12px;
+  color: white;
+  font-size: 1.2rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.combat-start-btn:hover {
+  transform: scale(1.05);
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+  .rpg-game {
+    padding: 16px;
+  }
+
+  .stats-bar {
+    gap: 16px;
+    padding: 12px 16px;
+  }
+
+  .game-area.explore {
+    grid-template-columns: 1fr;
+  }
+
+  .mini-map {
+    order: -1;
+  }
+
+  .map-grid {
+    grid-template-columns: repeat(6, 1fr);
+  }
+
+  .room-display {
+    padding: 24px;
+  }
+
+  .room-actions {
+    flex-direction: column;
+  }
+
+  .action-btn {
+    width: 100%;
+  }
+
+  .puzzle-card,
+  .combat-scene {
+    padding: 24px;
+  }
+
+  .combat-arena {
+    flex-direction: column;
+    gap: 32px;
+  }
+
+  .puzzle-actions {
+    flex-direction: column;
+  }
+}
