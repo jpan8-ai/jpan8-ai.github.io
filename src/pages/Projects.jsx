@@ -5,23 +5,23 @@ import Carousel from '../components/Carousel'
 export default function Projects() {
   const projects = [
     {
-      title: 'Project One',
-      description: 'A web application that helps users organize their tasks efficiently. Built with React and Node.js.',
-      tech: ['React', 'Node.js', 'MongoDB'],
+      title: 'Clawdbot & MiniMax API Explorer',
+      description: 'An intelligent AI assistant platform exploring Clawdbot automation and MiniMax large language models. Built interactive tools for API integration, natural language processing, and automated workflows.',
+      tech: ['React', 'MiniMax API', 'Node.js', 'AI/ML', 'REST APIs'],
+      link: '#',
+      github: 'https://github.com/jpan8-ai/jpan8-ai.github.io',
+    },
+    {
+      title: 'E-commerce Platform',
+      description: 'Full-stack e-commerce solution with real-time inventory management, Stripe payment integration, and user authentication.',
+      tech: ['Next.js', 'Stripe', 'PostgreSQL', 'TypeScript'],
       link: '#',
       github: '#',
     },
     {
-      title: 'Project Two',
-      description: 'E-commerce platform with real-time inventory management and payment integration.',
-      tech: ['Next.js', 'Stripe', 'PostgreSQL'],
-      link: '#',
-      github: '#',
-    },
-    {
-      title: 'Project Three',
-      description: 'Real-time collaboration tool for remote teams with video chat and document sharing.',
-      tech: ['React', 'WebRTC', 'Socket.io'],
+      title: 'Real-time Collaboration Tool',
+      description: 'Video chat and document sharing platform for remote teams with WebRTC and Socket.io.',
+      tech: ['React', 'WebRTC', 'Socket.io', 'Node.js'],
       link: '#',
       github: '#',
     },
@@ -88,23 +88,23 @@ export default function Projects() {
       </div>
 
       <section className="other-projects">
-        <h2 className="subsection-title">Other Things</h2>
+        <h2 className="subsection-title">Other Experiments</h2>
         <ul className="other-list">
           <li>
             <a href="#" className="other-link">
-              <span className="other-name">Side Project One</span>
+              <span className="other-name">AI Chat Interface</span>
               <span className="other-arrow">→</span>
             </a>
           </li>
           <li>
             <a href="#" className="other-link">
-              <span className="other-name">Side Project Two</span>
+              <span className="other-name">Automation Scripts</span>
               <span className="other-arrow">→</span>
             </a>
           </li>
           <li>
-            <a href="#" className="other-link">
-              <span className="other-name">Experiment Three</span>
+            <a href="/game" className="other-link">
+              <span className="other-name">RPG Puzzle Game</span>
               <span className="other-arrow">→</span>
             </a>
           </li>
