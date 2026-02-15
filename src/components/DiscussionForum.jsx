@@ -8,9 +8,9 @@ export default function DiscussionForum() {
     baseURL: import.meta.env.VITE_REACT_APP_API_BASE_URL
   });
 
-  const [topics, setTopics] = useState([{id: "", date: "", author: "", subject: "", text: ""}]);
-  const [selectedTopic, setSelectedTopic] = useState({id: "", date: "", author: "", subject: "", text: ""});
-  const [selectedMessages, setSelectedMessages] = useState([{id: "", blogId: "", text: "", date: "", author: ""}]);
+  const [topics, setTopics] = useState([]);
+  const [selectedTopic, setSelectedTopic] = useState(null);
+  const [selectedMessages, setSelectedMessages] = useState([]);
   const [showNewTopicForm, setShowNewTopicForm] = useState(false);
   const [newTopic, setNewTopic] = useState({ author: '', subject: '', message: '' });
   const [newMessage, setNewMessage] = useState({author: '', message: ''});
