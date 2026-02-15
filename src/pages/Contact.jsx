@@ -1,7 +1,8 @@
-import { motion } from 'framer-motion'
-import './Contact.css'
+import { motion } from 'framer-motion';
+import './Contact.css';
 
 export default function Contact() {
+
   return (
     <motion.main 
       className="contact page"
@@ -31,7 +32,7 @@ export default function Contact() {
               <span className="contact-icon">💼</span>
               <div className="contact-details">
                 <span className="contact-label">LinkedIn</span>
-                <span className="contact-value">/in/jie-pan-0045198</span>
+                <span className="contact-value">/in/jie-pan-b0045198</span>
               </div>
             </a>
             
@@ -45,7 +46,10 @@ export default function Contact() {
           </div>
         </div>
 
-        <form className="contact-form" onSubmit={(e) => e.preventDefault()}>
+        <form className="contact-form" onSubmit={(e) => {
+          e.preventDefault();
+
+        }}>
           <div className="form-group">
             <label htmlFor="name">Name</label>
             <input type="text" id="name" name="name" placeholder="Your name" required />

@@ -27,7 +27,7 @@ export default function About() {
           <div className="about-image">
             <div className="image-placeholder">
               <span>📷</span>
-              <p>Your photo here</p>
+              <p>To be added</p>
             </div>
           </div>
         </div>

@@ -1,52 +1,63 @@
 import { useState, useEffect } from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
 import './DiscussionForum.css'
-
-// Sample data - in production, this would come from an API
-const sampleTopics = [
-  {
-    id: 1,
-    author: 'John',
-    subject: 'Best practices for React hooks',
-    messages: [
-      { id: 1, author: 'John', text: 'What are your favorite custom hooks?', date: '2026-02-01' },
-      { id: 2, author: 'Alice', text: 'I love useLocalStorage!', date: '2026-02-02' },
-    ]
-  },
-  {
-    id: 2,
-    author: 'Sarah',
-    subject: 'AI in software development',
-    messages: [
-      { id: 1, author: 'Sarah', text: 'How is AI changing your workflow?', date: '2026-02-03' },
-    ]
-  },
-  {
-    id: 3,
-    author: 'Mike',
-    subject: 'Career advice for juniors',
-    messages: [
-      { id: 1, author: 'Mike', text: 'Tips for landing your first dev job?', date: '2026-02-04' },
-      { id: 2, author: 'Emma', text: 'Build projects and contribute to open source!', date: '2026-02-05' },
-    ]
-  }
-]
+import axios from "axios";
 
 export default function DiscussionForum() {
-  const [topics, setTopics] = useState(sampleTopics)
-  const [selectedTopic, setSelectedTopic] = useState(null)
-  const [showNewTopicForm, setShowNewTopicForm] = useState(false)
-  const [newTopic, setNewTopic] = useState({ author: '', subject: '', message: '' })
-  const [newMessage, setNewMessage] = useState('')
+  const axiosInstance = axios.create({
+    baseURL: import.meta.env.VITE_REACT_APP_API_BASE_URL
+  });
+
+  const [topics, setTopics] = useState([{id: "", date: "", author: "", subject: "", text: ""}]);
+  const [selectedTopic, setSelectedTopic] = useState({id: "", date: "", author: "", subject: "", text: ""});
+  const [selectedMessages, setSelectedMessages] = useState([{id: "", blogId: "", text: "", date: "", author: ""}]);
+  const [showNewTopicForm, setShowNewTopicForm] = useState(false);
+  const [newTopic, setNewTopic] = useState({ author: '', subject: '', message: '' });
+  const [newMessage, setNewMessage] = useState({author: '', message: ''});
+
+  useEffect(() => {
+    axiosInstance.get("getBlogEntries")
+      .then(response => {
+        let topics = [];
+        response.data.forEach((value, index) => 
+        {
+            topics = [...topics, {id: value.id, date: value.entrydate, author: value.author, subject: value.title, 
+              text: value.content}];
+        });
+        setTopics(topics);
+      })
+      .catch(err => 
+        console.log(err)
+      );
+    }, []);
+
+  useEffect(() => {
+    if (selectedTopic) {
+      axiosInstance.get(`getBlogEntryMessages?id=${selectedTopic.id}`)
+        .then(response => {
+          console.log(response.data);
+          var messages = [];
+          response.data.forEach((value, index) => {
+            messages = [...messages, {id: value.id, blogId: value.blogId, text: value.content, 
+              date: value.entrydate, author: value.author}];
+            setSelectedMessages(messages);
+          });
+        })
+        .catch(err => 
+          console.log(err)
+        );
+    }
+  }, [selectedTopic]);
+  
 
   const carouselItems = topics.map(topic => (
     <div className="topic-slide" key={topic.id}>
       <div className="topic-header">
         <span className="topic-author">{topic.author}</span>
-        <span className="topic-date">{topic.messages[0]?.date}</span>
+        <span className="topic-date">{topic.date}</span>
       </div>
       <h3 className="topic-subject">{topic.subject}</h3>
-      <p className="topic-preview">{topic.messages.length} message{topic.messages.length !== 1 ? 's' : ''}</p>
+      <p className="topic-preview">{topic.text}</p>
       <button 
         className="btn btn-primary topic-btn"
         onClick={() => setSelectedTopic(topic)}
@@ -56,43 +67,58 @@ export default function DiscussionForum() {
     </div>
   ))
 
+  const insertBlogMessage = (blogId, author, message) => {
+    axiosInstance.post("insertBlogMessage",
+      {
+        id: blogId,
+        author: author,
+        message: message
+      }
+    )
+    .then(response => {
+      console.log(response.data);
+    })
+    .catch(error => 
+      console.log(error)
+    )
+  };
+
   const handleCreateTopic = (e) => {
-    e.preventDefault()
-    const newTopicData = {
-      id: Date.now(),
-      author: newTopic.author,
-      subject: newTopic.subject,
-      messages: [
-        { id: 1, author: newTopic.author, text: newTopic.message, date: new Date().toISOString().split('T')[0] }
-      ]
-    }
-    setTopics([newTopicData, ...topics])
-    setNewTopic({ author: '', subject: '', message: '' })
-    setShowNewTopicForm(false)
+    e.preventDefault();
+    axiosInstance.post("insertBlog",
+      {
+        subject: newTopic.subject,
+        author: newTopic.author,
+        message: ""
+      })
+      .then(response => {
+        console.log(response.data);
+        const newTopicData = {
+          id: response.data,
+          author: newTopic.author,
+          subject: newTopic.subject,
+          text: ""
+        }
+        setTopics([newTopicData, ...topics]);
+        setNewTopic({ author: '', subject: '', message: '' });
+        insertBlogMessage(response.data, newTopic.author, newTopic.message);
+        setShowNewTopicForm(false);
+      })
+      .catch(error => {
+        console.log(error);
+        setNewTopic({ author: '', subject: '', message: '' });
+        setShowNewTopicForm(false);
+      });
   }
 
   const handleAddMessage = (e) => {
     e.preventDefault()
-    if (!newMessage.trim() || !selectedTopic) return
+    if (!newMessage?.message || !selectedTopic?.subject) return;
 
-    const updatedTopics = topics.map(topic => {
-      if (topic.id === selectedTopic.id) {
-        const updated = {
-          ...topic,
-          messages: [...topic.messages, {
-            id: Date.now(),
-            author: 'You',
-            text: newMessage,
-            date: new Date().toISOString().split('T')[0]
-          }]
-        }
-        setSelectedTopic(updated)
-        return updated
-      }
-      return topic
-    })
-    setTopics(updatedTopics)
-    setNewMessage('')
+    insertBlogMessage(selectedTopic.id, newMessage.author, newMessage.message);
+    setSelectedMessages([...selectedMessages, {id: "", blogId: selectedTopic.id, text: newMessage.message, 
+      date: "", author: newMessage.author}])
+    setNewMessage({author: '', message: ''})
   }
 
   const [currentIndex, setCurrentIndex] = useState(0)
@@ -176,7 +202,7 @@ export default function DiscussionForum() {
               </div>
 
               <div className="messages-list">
-                {selectedTopic.messages.map(msg => (
+                {selectedMessages.map(msg => (
                   <div key={msg.id} className="message">
                     <div className="message-header">
                       <span className="message-author">{msg.author}</span>
@@ -187,14 +213,26 @@ export default function DiscussionForum() {
                 ))}
               </div>
 
-              <form className="message-form" onSubmit={handleAddMessage}>
-                <textarea
-                  value={newMessage}
-                  onChange={e => setNewMessage(e.target.value)}
-                  placeholder="Add your thoughts..."
-                  rows="3"
-                />
-                <button type="submit" className="btn btn-primary">Post Reply</button>
+              <form className="message" onSubmit={handleAddMessage}>
+                <div>
+                  <label style={{marginRight: "10px"}}>Name:</label>
+                  <input style={{backgroundColor: "black"}}
+                    type='text'
+                    value={newMessage.author}
+                    onChange={e => {setNewMessage({...newMessage, author: e.target.value})}}
+                  />
+                </div>
+                <div className='message-text'>
+                  <textarea className='message-text' style={{width: "100%", backgroundColor: "black"}}
+                    value={newMessage.message}
+                    onChange={e => setNewMessage({...newMessage, message: e.target.value})}
+                    placeholder="Add your thoughts..."
+                    rows="3"
+                  />
+                </div>
+                <div style={{textAlign: "end"}}>
+                  <button type="submit" className="btn btn-primary">Post Reply</button>
+                </div>
               </form>
             </motion.div>
           </motion.div>
